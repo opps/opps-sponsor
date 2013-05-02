@@ -13,15 +13,16 @@ class SponsorAdmin(admin.ModelAdmin):
 
 class CampaignPostInline(admin.TabularInline):
     model = CampaignPost
+    raw_id_fields = ['post']
 
 @apply_opps_rules('sponsor')
 class CampaignAdmin(admin.ModelAdmin):
     model = Campaign
     inlines = [CampaignPostInline]
 
+    raw_id_fields = ['posts', 'logo']
     fieldsets = (
         (_(u'Campaign'), {'fields': ('sponsor', 'logo')}),
-        (_(u'Posts'), {'fields': ('posts')}),
     )
 
 admin.site.register(Sponsor, SponsorAdmin)

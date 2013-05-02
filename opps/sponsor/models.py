@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from django import models
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from opps.articles.models import Article
@@ -29,6 +29,5 @@ class Campaign(Article):
         verbose_name_plural=_(u'Campaigns')
 
 class CampaignPost(models.Model):
-     campaign = models.ForeignKey('sponsor.Campaign',
-                                  on_delete=models.SET_NULL)
-     post = models.ForeignKey('articles.Post', on_delete=models.SET_NULL)
+     campaign = models.ForeignKey('sponsor.Campaign')
+     post = models.ForeignKey('articles.Post')

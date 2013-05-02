@@ -8,40 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Sponsor'
-        db.create_table(u'sponsor_sponsor', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-        ))
-        db.send_create_signal(u'sponsor', ['Sponsor'])
-
-        # Adding model 'Campaign'
-        db.create_table(u'sponsor_campaign', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('sponsor', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sponsor.Sponsor'])),
-            ('logo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['images.Image'])),
-        ))
-        db.send_create_signal(u'sponsor', ['Campaign'])
-
-        # Adding model 'CampaignPost'
-        db.create_table(u'sponsor_campaignpost', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('campaign', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sponsor.Campaign'])),
-            ('post', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['articles.Post'])),
-        ))
-        db.send_create_signal(u'sponsor', ['CampaignPost'])
+        # Adding field 'Campaign.name'
+        db.add_column(u'sponsor_campaign', 'name',
+                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, blank=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Sponsor'
-        db.delete_table(u'sponsor_sponsor')
-
-        # Deleting model 'Campaign'
-        db.delete_table(u'sponsor_campaign')
-
-        # Deleting model 'CampaignPost'
-        db.delete_table(u'sponsor_campaignpost')
+        # Deleting field 'Campaign.name'
+        db.delete_column(u'sponsor_campaign', 'name')
 
 
     models = {
@@ -221,6 +196,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Campaign'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'logo': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['images.Image']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'posts': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['articles.Post']", 'through': u"orm['sponsor.CampaignPost']", 'symmetrical': 'False'}),
             'sponsor': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sponsor.Sponsor']"})
         },

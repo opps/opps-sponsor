@@ -2,20 +2,20 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from opps.articles.models import Article
 from opps.images.models import Image
 
 class Sponsor(models.Model):
-    name = models.CharField(_(u'Sponsor Name'), max_length=255)
-    description = models.TextField(_(u'Description'), blank=True)
+    name = models.CharField(_(u'Nome'), max_length=255)
+    description = models.TextField(_(u'Descrição'), blank=True)
 
     __unicode__ = lambda self: self.name
 
     class Meta:
-        verbose_name = _(u'Sponsor')
-        verbose_name_plural = _(u'Sponsors')
+        verbose_name = _(u'Patrocinador')
+        verbose_name_plural = _(u'Patrocinadores')
 
-class Campaign(Article):
+class Campaign(models.Model):
+    name = models.CharField(u'Nome da Campanha', max_length=255, blank=True)
     sponsor = models.ForeignKey('sponsor.Sponsor')
     logo = models.ForeignKey(Image, verbose_name=_(u'Logo'))
     posts = models.ManyToManyField(
@@ -24,9 +24,11 @@ class Campaign(Article):
         verbose_name='campaign',
     )
 
+    __unicode__ = lambda self: self.name or self.sponsor.name
+
     class Meta:
-        verbose_name=_(u'Campaign')
-        verbose_name_plural=_(u'Campaigns')
+        verbose_name=_(u'Campanha')
+        verbose_name_plural=_(u'Campanhas')
 
 class CampaignPost(models.Model):
      campaign = models.ForeignKey('sponsor.Campaign')

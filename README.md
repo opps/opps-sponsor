@@ -1,4 +1,6 @@
 opps-sponsor
-============
+================
 
-Sponsored Posts Opps app
+Sponsor and campaigns plugin for OPPS CMS sponsored posts
+
+

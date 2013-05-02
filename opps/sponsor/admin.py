@@ -22,7 +22,7 @@ class CampaignAdmin(admin.ModelAdmin):
 
     raw_id_fields = ['posts', 'logo']
     fieldsets = (
-        (_(u'Campaign'), {'fields': ('sponsor', 'logo')}),
+        (_(u'Campaign'), {'fields': ('sponsor', 'name', 'logo')}),
     )
 
 admin.site.register(Sponsor, SponsorAdmin)

@@ -8,7 +8,9 @@ from django_thumbor import generate_url
 from ..models import Campaign
 
 @register.simple_tag
-def get_campaign_logo(post, width, height):
+def get_campaign_logo(post, **kwargs):
+    width = kwargs.get('width', 100)
+    height = kwargs.get('height', 100)
     try:
         # Gets the latest published campaign of this post
         campaign = post.campaign_set.all_published().latest()

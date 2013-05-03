@@ -19,6 +19,13 @@ class Migration(SchemaMigration):
         # Adding model 'Campaign'
         db.create_table(u'sponsor_campaign', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('date_insert', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('date_update', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['accounts.CustomUser'])),
+            ('site', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['sites.Site'])),
+            ('date_available', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True)),
+            ('published', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
             ('sponsor', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sponsor.Sponsor'])),
             ('logo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['images.Image'])),
         ))
@@ -219,10 +226,17 @@ class Migration(SchemaMigration):
         },
         u'sponsor.campaign': {
             'Meta': {'object_name': 'Campaign'},
+            'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True'}),
+            'date_insert': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'logo': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['images.Image']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'posts': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['articles.Post']", 'through': u"orm['sponsor.CampaignPost']", 'symmetrical': 'False'}),
-            'sponsor': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sponsor.Sponsor']"})
+            'published': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['sites.Site']"}),
+            'sponsor': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sponsor.Sponsor']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.CustomUser']"})
         },
         u'sponsor.campaignpost': {
             'Meta': {'object_name': 'CampaignPost'},

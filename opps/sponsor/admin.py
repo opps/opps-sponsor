@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from opps.core.admin import apply_opps_rules
+from opps.core.admin import apply_opps_rules, PublishableAdmin
 from django_thumbor import generate_url
 
 from .models import Sponsor, Campaign, CampaignPost
@@ -17,10 +17,11 @@ class CampaignPostInline(admin.TabularInline):
     raw_id_fields = ['post']
 
 @apply_opps_rules('sponsor')
-class CampaignAdmin(admin.ModelAdmin):
+class CampaignAdmin(PublishableAdmin):
     model = Campaign
     inlines = [CampaignPostInline]
     list_display = ('sponsor', 'name', 'show_image')
+    list_filter = ('sponsor__name', 'name')
 
     def show_image(self, obj):
         print type(obj.logo.image)

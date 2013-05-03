@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from opps.images.models import Image
+from opps.core.models import Publishable
+
 
 class CampaignManager(models.Manager):
     def all_published(self):
@@ -20,7 +22,7 @@ class Sponsor(models.Model):
         verbose_name = _(u'Patrocinador')
         verbose_name_plural = _(u'Patrocinadores')
 
-class Campaign(models.Model):
+class Campaign(Publishable):
     name = models.CharField(u'Nome da Campanha', max_length=255, blank=True)
     sponsor = models.ForeignKey('sponsor.Sponsor')
     logo = models.ForeignKey(Image, verbose_name=_(u'Logo'))
@@ -29,9 +31,6 @@ class Campaign(models.Model):
         through='CampaignPost',
         verbose_name='campaign',
     )
-    published = models.BooleanField(u'Publicado', default=False)
-
-    objects = CampaignManager()
 
     __unicode__ = lambda self: self.name or self.sponsor.name
 

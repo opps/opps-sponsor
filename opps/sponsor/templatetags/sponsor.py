@@ -11,11 +11,13 @@ from ..models import Campaign
 def get_campaign_logo(post, **kwargs):
     width = kwargs.get('width', 100)
     height = kwargs.get('height', 100)
+    print "# DIMENSOES"
+    print width, height
     try:
         # Gets the latest published campaign of this post
         campaign = post.campaign_set.all_published().latest()
     except Campaign.DoesNotExist:
-        return None
+        return ''
     return u'<img src="{}" width="{}px" height="{}px" />'.format(
         generate_url(campaign.logo.image.url, width=width, height=height),
         width,

@@ -20,7 +20,7 @@ class CampaignPostInline(admin.TabularInline):
 class CampaignAdmin(PublishableAdmin):
     model = Campaign
     inlines = [CampaignPostInline]
-    list_display = ('sponsor', 'name', 'show_image')
+    list_display = ('sponsor', 'name', 'show_image' , 'published')
     list_filter = ('sponsor__name', 'name')
 
     def show_image(self, obj):

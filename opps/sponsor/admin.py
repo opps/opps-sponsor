@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from opps.core.admin import apply_opps_rules
+from django_thumbor import generate_url
 
 from .models import Sponsor, Campaign, CampaignPost
 
@@ -19,6 +20,16 @@ class CampaignPostInline(admin.TabularInline):
 class CampaignAdmin(admin.ModelAdmin):
     model = Campaign
     inlines = [CampaignPostInline]
+    list_display = ('sponsor', 'name', 'show_image')
+
+    def show_image(self, obj):
+        print type(obj.logo.image)
+        image = obj.logo.image
+        return u'<img width="100px" height="100px" src="{0}" />'.format(
+            generate_url(image.url, width=100, height=100)
+        )
+    show_image.short_description = u'Logo da Campanha'
+    show_image.allow_tags = True
 
     raw_id_fields = ['posts', 'logo']
     fieldsets = (

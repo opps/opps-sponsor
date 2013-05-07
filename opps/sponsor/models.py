@@ -1,45 +1,93 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from opps.images.models import Image
 from opps.core.models import Publishable
 
 
-class CampaignManager(models.Manager):
-    def all_published(self):
-        return super(CampaignManager, self).get_query_set().filter(
-            published=True,
-        )
-
 class Sponsor(models.Model):
-    name = models.CharField(_(u'Nome'), max_length=255)
-    description = models.TextField(_(u'Descrição'), blank=True)
+    name = models.CharField(_(u'Name'), max_length=255)
+    description = models.TextField(_(u'Description'), blank=True)
 
     __unicode__ = lambda self: self.name
 
     class Meta:
-        verbose_name = _(u'Patrocinador')
-        verbose_name_plural = _(u'Patrocinadores')
+        verbose_name = _(u'Sponsor')
+        verbose_name_plural = _(u'Sponsors')
+
 
 class Campaign(Publishable):
-    name = models.CharField(u'Nome da Campanha', max_length=255, blank=True)
+    VISIBILITY = (
+        ('post', _(u'Post')),
+        ('channel', _(u'Channel')),
+    )
+    name = models.CharField(
+        u'Campaign Name',
+        max_length=255,
+        blank=True
+    )
+    title = models.CharField(
+        u'Campaign Title',
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    visibility = models.CharField(
+        u'Visibility',
+        max_length=20,
+        choices=VISIBILITY,
+        default='post'
+    )
     sponsor = models.ForeignKey('sponsor.Sponsor')
-    logo = models.ForeignKey(Image, verbose_name=_(u'Logo'))
+    logo = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Logo')
+    )
     posts = models.ManyToManyField(
         'articles.Post',
         through='CampaignPost',
-        verbose_name='campaign',
+        verbose_name=_(u'Campaign'),
+    )
+    channels = models.ManyToManyField(
+        'channels.Channel',
+        through='CampaignChannel',
+        verbose_name=_(u'Channel'),
+    )
+    date_end = models.DateTimeField(_(u"End date"), null=True, blank=True)
+
+    # optional fields
+    cssclass = models.CharField(
+        _(u"CSS class"),
+        max_length=40,
+        blank=True,
+        null=True
+    )
+    style = models.CharField(
+        _(u"CSS style"),
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    keyword = models.CharField(
+        _(u"Keyword"),
+        max_length=255,
+        blank=True,
+        null=True
     )
 
     __unicode__ = lambda self: self.name or self.sponsor.name
 
-
     class Meta:
-        verbose_name=_(u'Campanha')
-        verbose_name_plural=_(u'Campanhas')
-        get_latest_by = 'published'
+        verbose_name = _(u'Campaign')
+        verbose_name_plural = _(u'Campaigns')
+        get_latest_by = 'date_available'
+
 
 class CampaignPost(models.Model):
-     campaign = models.ForeignKey('sponsor.Campaign')
-     post = models.ForeignKey('articles.Post')
+    campaign = models.ForeignKey('sponsor.Campaign')
+    post = models.ForeignKey('articles.Post')
+
+
+class CampaignChannel(models.Model):
+    campaign = models.ForeignKey('sponsor.Campaign')
+    channel = models.ForeignKey('channels.Channel')

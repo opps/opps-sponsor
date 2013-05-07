@@ -1,0 +1,6 @@
+{% if campaign %}
+{% load thumbor_tags %}
+<div class="opps-sponsor {{campaign.cssclass}}" style='float:left;margin:10px;{{campaign.style}}'>
+    <img src="{% thumbor_url campaign.logo.url width=200 height=200 %}" alt="{{campaign.title}}">
+</div>
+{% endif %}

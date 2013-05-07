@@ -45,7 +45,6 @@ class CampaignAdmin(PublishableAdmin):
         (_(u'Campaign'), {'fields': (
             'sponsor', 'name', 'logo', 'published',
             ('date_available', 'date_end'),
-            'visibility'
         )}),
         (_(u'Optional'), {'fields': (
             'cssclass', 'style', 'keyword'

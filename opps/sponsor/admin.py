@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from opps.core.admin import apply_opps_rules, PublishableAdmin
-from django_thumbor import generate_url
+from opps.images.generate import image_url
 
 from .models import Sponsor, Campaign, CampaignPost, CampaignChannel
 
@@ -35,7 +35,7 @@ class CampaignAdmin(PublishableAdmin):
         print type(obj.logo.image)
         image = obj.logo.image
         return u'<img width="100px" height="100px" src="{0}" />'.format(
-            generate_url(image.url, width=100, height=100)
+            image_url(image.url, width=100, height=100)
         )
     show_image.short_description = u'Logo da Campanha'
     show_image.allow_tags = True

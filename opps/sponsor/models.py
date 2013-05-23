@@ -22,18 +22,18 @@ class Campaign(Publishable):
         ('channel', _(u'Channel')),
     )
     name = models.CharField(
-        u'Campaign Name',
+        _(u'Campaign Name'),
         max_length=255,
         blank=True
     )
     title = models.CharField(
-        u'Campaign Title',
+        _(u'Campaign Title'),
         max_length=255,
         blank=True,
         null=True
     )
     visibility = models.CharField(
-        u'Visibility',
+        _(u'Visibility'),
         max_length=20,
         choices=VISIBILITY,
         default='post'

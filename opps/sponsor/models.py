@@ -38,7 +38,8 @@ class Campaign(Publishable):
         choices=VISIBILITY,
         default='post'
     )
-    sponsor = models.ForeignKey('sponsor.Sponsor')
+    sponsor = models.ForeignKey('sponsor.Sponsor',
+                                verbose_name=_(u'Sponsor'))
     logo = models.ForeignKey(
         Image,
         verbose_name=_(u'Logo')
@@ -84,10 +85,20 @@ class Campaign(Publishable):
 
 
 class CampaignPost(models.Model):
-    campaign = models.ForeignKey('sponsor.Campaign')
-    post = models.ForeignKey('articles.Post')
+    campaign = models.ForeignKey('sponsor.Campaign',
+                                 verbose_name=_(u'Campaign'))
+    post = models.ForeignKey('articles.Post',
+                             verbose_name=_(u'Post'))
 
+    class Meta:
+        verbose_name = _(u'Campaign Post')
+        verbose_name_plural = _(u'Campaign Posts')
 
 class CampaignChannel(models.Model):
-    campaign = models.ForeignKey('sponsor.Campaign')
-    channel = models.ForeignKey('channels.Channel')
+    campaign = models.ForeignKey('sponsor.Campaign',
+                                 verbose_name=_(u'Campaign'))
+    channel = models.ForeignKey('channels.Channel',
+                                verbose_name=_(u'Channel'))
+    class Meta:
+        verbose_name = _(u'Campaign Channel')
+        verbose_name_plural = _(u'Campaign Channels')

@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Ellison Leão <ellisonleao@gmail.com>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-11 13:43-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: admin.py:45 models.py:50 models.py:82 models.py:89 models.py:99
+msgid "Campaign"
+msgstr "Campanha"
+
+#: admin.py:49
+msgid "Optional"
+msgstr "Opcional"
+
+#: models.py:9
+msgid "Name"
+msgstr "Nome"
+
+#: models.py:10
+msgid "Description"
+msgstr "Descrição"
+
+#: models.py:15 models.py:42
+msgid "Sponsor"
+msgstr "Patrocinador"
+
+#: models.py:16
+msgid "Sponsors"
+msgstr "Patrocinadores"
+
+#: models.py:21 models.py:91
+msgid "Post"
+msgstr "Post"
+
+#: models.py:22 models.py:55 models.py:101
+msgid "Channel"
+msgstr "Canal"
+
+#: models.py:25
+msgid "Campaign Name"
+msgstr "Nome da campanha"
+
+#: models.py:30
+msgid "Campaign Title"
+msgstr "Título da campanha"
+
+#: models.py:36
+msgid "Visibility"
+msgstr "Visibilidade"
+
+#: models.py:45
+msgid "Logo"
+msgstr "Logomarca"
+
+#: models.py:57
+msgid "End date"
+msgstr "Data final"
+
+#: models.py:61
+msgid "CSS class"
+msgstr "Classe CSS"
+
+#: models.py:67
+msgid "CSS style"
+msgstr "Estilo CSS"
+
+#: models.py:73
+msgid "Keyword"
+msgstr "Palavra-chave"
+
+#: models.py:83
+msgid "Campaigns"
+msgstr "Campanhas"
+
+#: models.py:94
+msgid "Campaign Post"
+msgstr "Post da campanha"
+
+#: models.py:95
+msgid "Campaign Posts"
+msgstr "Posts da campanha"
+
+#: models.py:103
+msgid "Campaign Channel"
+msgstr "Canal da campanha"
+
+#: models.py:104
+msgid "Campaign Channels"
+msgstr "Canais da campanha"

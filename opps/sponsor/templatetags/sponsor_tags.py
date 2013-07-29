@@ -5,11 +5,9 @@ from django.db.models import Q
 
 register = template.Library()
 
-# from ..models import Campaign
-
 
 @register.simple_tag
-def get_campaign(post,
+def get_campaign(container,
                  template_name='sponsor/campaign.html',
                  **kwargs):
     now = timezone.now()
@@ -17,13 +15,13 @@ def get_campaign(post,
         published=True,
         date_available__lte=now
     )
-    # Gets published campaigns of this post
-    campaign = post.campaign_set.filter(**lookup).filter(
+    # Gets published campaigns of this container
+    campaign = container.campaign_set.filter(**lookup).filter(
         Q(date_end__gte=now) | Q(date_end__isnull=True)
     )
     if not campaign:
         #try to get channel campaigns
-        campaign = post.channel.campaign_set.filter(**lookup).filter(
+        campaign = container.channel.campaign_set.filter(**lookup).filter(
             Q(date_end__gte=now) | Q(date_end__isnull=True)
         )
     t = template.loader.get_template(template_name)
@@ -33,6 +31,6 @@ def get_campaign(post,
 
     return t.render(
         template.Context(
-            {'campaign': campaign, 'post': post}
+            {'campaign': campaign, 'container': container}
         )
     )

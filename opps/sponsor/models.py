@@ -44,9 +44,9 @@ class Campaign(Publishable):
         Image,
         verbose_name=_(u'Logo')
     )
-    posts = models.ManyToManyField(
-        'articles.Post',
-        through='CampaignPost',
+    containers = models.ManyToManyField(
+        'containers.Container',
+        through='CampaignContainer',
         verbose_name=_(u'Campaign'),
     )
     channels = models.ManyToManyField(
@@ -84,21 +84,23 @@ class Campaign(Publishable):
         get_latest_by = 'date_available'
 
 
-class CampaignPost(models.Model):
+class CampaignContainer(models.Model):
     campaign = models.ForeignKey('sponsor.Campaign',
                                  verbose_name=_(u'Campaign'))
-    post = models.ForeignKey('articles.Post',
-                             verbose_name=_(u'Post'))
+    container = models.ForeignKey('containers.Container',
+                             verbose_name=_(u'Container'))
 
     class Meta:
-        verbose_name = _(u'Campaign Post')
-        verbose_name_plural = _(u'Campaign Posts')
+        verbose_name = _(u'Campaign Container')
+        verbose_name_plural = _(u'Campaign Containers')
+
 
 class CampaignChannel(models.Model):
     campaign = models.ForeignKey('sponsor.Campaign',
                                  verbose_name=_(u'Campaign'))
     channel = models.ForeignKey('channels.Channel',
                                 verbose_name=_(u'Channel'))
+
     class Meta:
         verbose_name = _(u'Campaign Channel')
         verbose_name_plural = _(u'Campaign Channels')

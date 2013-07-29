@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from opps.core.admin import apply_opps_rules, PublishableAdmin
 from opps.images.generate import image_url
 
-from .models import Sponsor, Campaign, CampaignPost, CampaignChannel
+from .models import Sponsor, Campaign, CampaignContainer, CampaignChannel
 
 
 @apply_opps_rules('sponsor')
@@ -14,9 +14,9 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 
-class CampaignPostInline(admin.TabularInline):
-    model = CampaignPost
-    raw_id_fields = ['post']
+class CampaignContainerInline(admin.TabularInline):
+    model = CampaignContainer
+    raw_id_fields = ['container']
 
 
 class CampaignChannelInline(admin.TabularInline):
@@ -27,20 +27,19 @@ class CampaignChannelInline(admin.TabularInline):
 @apply_opps_rules('sponsor')
 class CampaignAdmin(PublishableAdmin):
     model = Campaign
-    inlines = [CampaignPostInline, CampaignChannelInline]
+    inlines = [CampaignContainerInline, CampaignChannelInline]
     list_display = ('sponsor', 'name', 'show_image', 'published')
     list_filter = ('sponsor__name', 'name', 'published')
 
     def show_image(self, obj):
-        print type(obj.logo.image)
-        image = obj.logo.image
+        image = obj.logo.archive
         return u'<img width="100px" height="100px" src="{0}" />'.format(
             image_url(image.url, width=100, height=100)
         )
     show_image.short_description = u'Logo da Campanha'
     show_image.allow_tags = True
 
-    raw_id_fields = ['posts', 'logo', 'sponsor']
+    raw_id_fields = ['containers', 'logo', 'sponsor']
     fieldsets = (
         (_(u'Campaign'), {'fields': (
             'sponsor', 'name', 'logo', 'published',

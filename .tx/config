@@ -3,6 +3,6 @@ host = https://www.transifex.com
 
 [opps.sponsor]
 file_filter = opps/sponsor/locale/<lang>/LC_MESSAGES/django.po
-source_file = opps/sponsor/locale/en_US/LC_MESSAGES/django.po
-source_lang = en_US
+source_file = opps/sponsor/locale/en/LC_MESSAGES/django.po
+source_lang = en
 type = PO

@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[opps.sponsor]
+[opps-sponsor.sponsor]
 file_filter = opps/sponsor/locale/<lang>/LC_MESSAGES/django.po
 source_file = opps/sponsor/locale/en/LC_MESSAGES/django.po
 source_lang = en

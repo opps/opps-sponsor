@@ -20,6 +20,7 @@ class Campaign(Publishable):
     VISIBILITY = (
         ('post', _(u'Post')),
         ('channel', _(u'Channel')),
+        ('box', _(u'Box')),
     )
     name = models.CharField(
         _(u'Campaign Name'),
@@ -42,7 +43,16 @@ class Campaign(Publishable):
                                 verbose_name=_(u'Sponsor'))
     logo = models.ForeignKey(
         Image,
-        verbose_name=_(u'Logo')
+        verbose_name=_(u'Logo'),
+        null=True,
+        blank=True     
+    )
+    top_image = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Top Image'),
+        null=True,
+        blank=True,
+        related_name='campaigntopimage'
     )
     containers = models.ManyToManyField(
         'containers.Container',
@@ -53,6 +63,11 @@ class Campaign(Publishable):
         'channels.Channel',
         through='CampaignChannel',
         verbose_name=_(u'Channel'),
+    )
+    boxes = models.ManyToManyField(
+        'containers.ContainerBox',
+        through='CampaignContainerBox',
+        verbose_name=_(u'Box')
     )
     date_end = models.DateTimeField(_(u"End date"), null=True, blank=True)
 
@@ -94,6 +109,15 @@ class CampaignContainer(models.Model):
         verbose_name = _(u'Campaign Container')
         verbose_name_plural = _(u'Campaign Containers')
 
+class CampaignContainerBox(models.Model):
+    campaign = models.ForeignKey('sponsor.Campaign',
+                                 verbose_name=_(u'Campaign'))
+    box = models.ForeignKey('containers.ContainerBox',
+                             verbose_name=_(u'Box'))
+
+    class Meta:
+        verbose_name = _(u'Campaign Box')
+        verbose_name_plural = _(u'Campaign Boxes')
 
 class CampaignChannel(models.Model):
     campaign = models.ForeignKey('sponsor.Campaign',

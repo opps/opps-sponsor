@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from opps.core.admin import apply_opps_rules, PublishableAdmin
 from opps.images.generate import image_url
 
-from .models import Sponsor, Campaign, CampaignContainer, CampaignChannel
+from .models import Sponsor, Campaign, CampaignContainer, CampaignChannel, CampaignContainerBox
 
 
 @apply_opps_rules('sponsor')
@@ -23,11 +23,15 @@ class CampaignChannelInline(admin.TabularInline):
     model = CampaignChannel
     raw_id_fields = ['channel']
 
+class CampaignContainerBoxInline(admin.TabularInline):
+    model = CampaignContainerBox
+    raw_id_fields = ['box']
+
 
 @apply_opps_rules('sponsor')
 class CampaignAdmin(PublishableAdmin):
     model = Campaign
-    inlines = [CampaignContainerInline, CampaignChannelInline]
+    inlines = [CampaignContainerInline, CampaignChannelInline, CampaignContainerBoxInline]
     list_display = ('sponsor', 'name', 'show_image', 'published')
     list_filter = ('sponsor__name', 'name', 'published')
 
@@ -39,10 +43,10 @@ class CampaignAdmin(PublishableAdmin):
     show_image.short_description = u'Logo da Campanha'
     show_image.allow_tags = True
 
-    raw_id_fields = ['containers', 'logo', 'sponsor']
+    raw_id_fields = ['containers', 'logo', 'sponsor', 'top_image']
     fieldsets = (
         (_(u'Campaign'), {'fields': (
-            'sponsor', 'name', 'logo', 'published',
+            'sponsor', 'name', 'logo', 'top_image', 'published',
             ('date_available', 'date_end'),
         )}),
         (_(u'Optional'), {'fields': (

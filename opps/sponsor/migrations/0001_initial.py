@@ -40,7 +40,8 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('visibility', self.gf('django.db.models.fields.CharField')(default='post', max_length=20)),
             ('sponsor', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sponsor.Sponsor'])),
-            ('logo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['images.Image'])),
+            ('logo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['images.Image'], null=True, blank=True)),
+            ('top_image', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['images.Image'], null=True, blank=True)),
             ('date_end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('cssclass', self.gf('django.db.models.fields.CharField')(max_length=40, null=True, blank=True)),
             ('style', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
@@ -56,6 +57,15 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'sponsor', ['CampaignContainer'])
 
+        # Adding model 'CampaignContainerBox'
+        db.create_table(u'sponsor_campaigncontainerbox', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('campaign', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sponsor.Campaign'])),
+            ('box', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['containers.ContainerBox'])),
+        ))
+        db.send_create_signal(u'sponsor', ['CampaignContainerBox'])
+
+        
         # Adding model 'CampaignChannel'
         db.create_table(u'sponsor_campaignchannel', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -74,6 +84,7 @@ class Migration(SchemaMigration):
 
         # Deleting model 'CampaignContainer'
         db.delete_table(u'sponsor_campaigncontainer')
+        db.delete_table(u'sponsor_campaigncontainerbox')
 
         # Deleting model 'CampaignChannel'
         db.delete_table(u'sponsor_campaignchannel')
@@ -152,6 +163,68 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '140', 'db_index': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name)})
         },
+
+        u'boxes.queryset': {
+            'Meta': {'object_name': 'QuerySet'},
+            'channel': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['channels.Channel']", 'null': 'True', 'blank': 'True'}),
+            'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'db_index': 'True'}),
+            'date_insert': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'filters': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'limit': ('django.db.models.fields.PositiveIntegerField', [], {'default': '7'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '150'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
+            'order': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
+            'published': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['sites.Site']"}),
+            'site_domain': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '150'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.CustomUser']"})
+        },
+        
+
+        u'containers.containerbox': {
+            'Meta': {'object_name': 'ContainerBox'},
+            'channel': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['channels.Channel']"}),
+            'channel_long_slug': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '250', 'null': 'True', 'blank': 'True'}),
+            'channel_name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '140', 'null': 'True', 'blank': 'True'}),
+            'containers': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'containerbox_containers'", 'to': u"orm['containers.Container']", 'through': u"orm['containers.ContainerBoxContainers']", 'blank': 'True', 'symmetrical': 'False', 'null': 'True'}),
+            'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'db_index': 'True'}),
+            'date_insert': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
+            'published': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
+            'queryset': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'containerbox_querysets'", 'null': 'True', 'to': u"orm['boxes.QuerySet']"}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['sites.Site']"}),
+            'site_domain': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '150'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.CustomUser']"})
+        },
+        u'containers.containerboxcontainers': {
+            'Meta': {'ordering': "('order', 'aggregate')", 'object_name': 'ContainerBoxContainers'},
+            'aggregate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'container': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['containers.Container']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
+            'containerbox': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['containers.ContainerBox']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
+            'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True'}),
+            'date_end': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'hat': ('django.db.models.fields.CharField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'}),
+            'highlight': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'main_image': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['images.Image']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
+            'main_image_caption': ('django.db.models.fields.CharField', [], {'max_length': '4000', 'null': 'True', 'blank': 'True'}),
+            'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
+        },
+
+
+
+        
         u'containers.containerimage': {
             'Meta': {'ordering': "('order',)", 'object_name': 'ContainerImage'},
             'caption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
@@ -229,6 +302,12 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'CampaignChannel'},
             'campaign': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sponsor.Campaign']"}),
             'channel': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['channels.Channel']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        u'sponsor.campaigncontainerbox': {
+            'Meta': {'object_name': 'CampaignContainerBox'},
+            'campaign': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sponsor.Campaign']"}),
+            'box': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['containers.ContainerBox']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         u'sponsor.campaigncontainer': {

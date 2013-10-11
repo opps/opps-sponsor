@@ -46,7 +46,9 @@ class CampaignAdmin(PublishableAdmin):
     raw_id_fields = ['containers', 'logo', 'sponsor', 'top_image']
     fieldsets = (
         (_(u'Campaign'), {'fields': (
-            'sponsor', 'name', 'logo', 'top_image', 'published',
+            'sponsor', 'name',
+            'logo', 'top_image', 'ads_tag',
+            'published',
             ('date_available', 'date_end'),
         )}),
         (_(u'Optional'), {'fields': (

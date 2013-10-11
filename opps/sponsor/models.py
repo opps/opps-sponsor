@@ -45,7 +45,7 @@ class Campaign(Publishable):
         Image,
         verbose_name=_(u'Logo'),
         null=True,
-        blank=True     
+        blank=True
     )
     top_image = models.ForeignKey(
         Image,
@@ -53,6 +53,11 @@ class Campaign(Publishable):
         null=True,
         blank=True,
         related_name='campaigntopimage'
+    )
+    ads_tag = models.TextField(
+        _(u"Ads tags"),
+        null=True,
+        blank=True
     )
     containers = models.ManyToManyField(
         'containers.Container',

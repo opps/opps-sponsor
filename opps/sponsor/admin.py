@@ -16,16 +16,16 @@ class SponsorAdmin(admin.ModelAdmin):
 
 class CampaignContainerInline(admin.TabularInline):
     model = CampaignContainer
-    raw_id_fields = ['container']
+    raw_id_fields = ['container', 'logo', 'top_image']
 
 
 class CampaignChannelInline(admin.TabularInline):
     model = CampaignChannel
-    raw_id_fields = ['channel']
+    raw_id_fields = ['channel', 'logo', 'top_image']
 
 class CampaignContainerBoxInline(admin.TabularInline):
     model = CampaignContainerBox
-    raw_id_fields = ['box']
+    raw_id_fields = ['box', 'logo', 'top_image']
 
 
 @apply_opps_rules('sponsor')

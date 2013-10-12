@@ -103,13 +103,33 @@ class Campaign(Publishable):
         verbose_name_plural = _(u'Campaigns')
         get_latest_by = 'date_available'
 
-
+    def get_containers(self):
+        return self.campaigncontainer_set.all()
+        
 class CampaignContainer(models.Model):
     campaign = models.ForeignKey('sponsor.Campaign',
                                  verbose_name=_(u'Campaign'))
     container = models.ForeignKey('containers.Container',
                              verbose_name=_(u'Container'))
-
+    logo = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Logo'),
+        null=True,
+        blank=True
+    )
+    top_image = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Top Image'),
+        null=True,
+        blank=True,
+        related_name='campaigncontainertopimage'
+    )
+    ads_tag = models.TextField(
+        _(u"Ads tags"),
+        null=True,
+        blank=True
+    )
+    
     class Meta:
         verbose_name = _(u'Campaign Container')
         verbose_name_plural = _(u'Campaign Containers')
@@ -120,6 +140,25 @@ class CampaignContainerBox(models.Model):
     box = models.ForeignKey('containers.ContainerBox',
                              verbose_name=_(u'Box'))
 
+    logo = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Logo'),
+        null=True,
+        blank=True
+    )
+    top_image = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Top Image'),
+        null=True,
+        blank=True,
+        related_name='campaigncontainerboxtopimage'
+    )
+    ads_tag = models.TextField(
+        _(u"Ads tags"),
+        null=True,
+        blank=True
+    )
+    
     class Meta:
         verbose_name = _(u'Campaign Box')
         verbose_name_plural = _(u'Campaign Boxes')
@@ -130,6 +169,25 @@ class CampaignChannel(models.Model):
     channel = models.ForeignKey('channels.Channel',
                                 verbose_name=_(u'Channel'))
 
+    logo = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Logo'),
+        null=True,
+        blank=True
+    )
+    top_image = models.ForeignKey(
+        Image,
+        verbose_name=_(u'Top Image'),
+        null=True,
+        blank=True,
+        related_name='campaignchanneltopimage'
+    )
+    ads_tag = models.TextField(
+        _(u"Ads tags"),
+        null=True,
+        blank=True
+    )
+    
     class Meta:
         verbose_name = _(u'Campaign Channel')
         verbose_name_plural = _(u'Campaign Channels')

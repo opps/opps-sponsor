@@ -129,6 +129,8 @@ class CampaignContainer(models.Model):
         null=True,
         blank=True
     )
+
+    __unicode__ = lambda self: self.container.__unicode__()
     
     class Meta:
         verbose_name = _(u'Campaign Container')
@@ -158,6 +160,8 @@ class CampaignContainerBox(models.Model):
         null=True,
         blank=True
     )
+
+    __unicode__ = lambda self: self.box.__unicode__()
     
     class Meta:
         verbose_name = _(u'Campaign Box')
@@ -187,6 +191,8 @@ class CampaignChannel(models.Model):
         null=True,
         blank=True
     )
+
+    __unicode__ = lambda self: self.channel.__unicode__()
     
     class Meta:
         verbose_name = _(u'Campaign Channel')

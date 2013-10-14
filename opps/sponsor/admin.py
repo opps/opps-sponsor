@@ -14,19 +14,20 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 
-class CampaignContainerInline(admin.TabularInline):
+class CampaignContainerInline(admin.StackedInline):
     model = CampaignContainer
     raw_id_fields = ['container', 'logo', 'top_image']
+    extra = 1
 
-
-class CampaignChannelInline(admin.TabularInline):
+class CampaignChannelInline(admin.StackedInline):
     model = CampaignChannel
     raw_id_fields = ['channel', 'logo', 'top_image']
+    extra = 1
 
-class CampaignContainerBoxInline(admin.TabularInline):
+class CampaignContainerBoxInline(admin.StackedInline):
     model = CampaignContainerBox
     raw_id_fields = ['box', 'logo', 'top_image']
-
+    extra = 1
 
 @apply_opps_rules('sponsor')
 class CampaignAdmin(PublishableAdmin):

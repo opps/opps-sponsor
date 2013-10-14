@@ -37,6 +37,9 @@ class CampaignAdmin(PublishableAdmin):
     list_filter = ('sponsor__name', 'name', 'published')
 
     def show_image(self, obj):
+        if not obj.logo:
+            return "No Image"
+
         image = obj.logo.archive
         return u'<img width="100px" height="100px" src="{0}" />'.format(
             image_url(image.url, width=100, height=100)

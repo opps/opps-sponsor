@@ -14,17 +14,17 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 
-class CampaignContainerInline(admin.StackedInline):
+class CampaignContainerInline(admin.TabularInline):
     model = CampaignContainer
     raw_id_fields = ['container', 'logo', 'top_image']
     extra = 1
 
-class CampaignChannelInline(admin.StackedInline):
+class CampaignChannelInline(admin.TabularInline):
     model = CampaignChannel
     raw_id_fields = ['channel', 'logo', 'top_image']
     extra = 1
 
-class CampaignContainerBoxInline(admin.StackedInline):
+class CampaignContainerBoxInline(admin.TabularInline):
     model = CampaignContainerBox
     raw_id_fields = ['box', 'logo', 'top_image']
     extra = 1

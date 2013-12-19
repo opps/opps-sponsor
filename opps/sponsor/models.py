@@ -162,7 +162,7 @@ class CampaignContainerBox(models.Model):
     )
 
     __unicode__ = lambda self: self.box.__unicode__()
-    
+
     class Meta:
         verbose_name = _(u'Campaign Box')
         verbose_name_plural = _(u'Campaign Boxes')
@@ -193,7 +193,7 @@ class CampaignChannel(models.Model):
     )
 
     __unicode__ = lambda self: self.channel.__unicode__()
-    
+
     class Meta:
         verbose_name = _(u'Campaign Channel')
         verbose_name_plural = _(u'Campaign Channels')
